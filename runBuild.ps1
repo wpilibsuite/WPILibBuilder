@@ -61,7 +61,7 @@ Set-Location $baseLocation
 
 #Handle Installer
 
-$regex = """edu\.wpi\.first\.GradleRIO"".+version.+"".+"""
+$regex = "id ""edu\.wpi\.first\.GradleRIO"".+version.+"".+"""
 
 $updateGradleRio = Get-Content -Path .\wpilibinstaller\gradleriobase\build.gradle
 
