@@ -22,8 +22,6 @@ $updateGrRepo = $updateGrRepo.Replace("this.useDevelopment = false", "this.useDe
 
 Set-Content -Path .\gradlerio\src\main\groovy\edu\wpi\first\gradlerio\wpi\WPIMavenExtension.groovy -Value $updateGrRepo
 
-return
-
 $baseLocation = Get-Location
 
 Set-Location .\gradlerio
@@ -80,6 +78,10 @@ Set-Content -Path .\wpilibinstaller\gradleriobase\build.gradle -Value $updateGra
 Set-Location .\wpilibinstaller
 
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
 
 Set-Location $baseLocation
 
