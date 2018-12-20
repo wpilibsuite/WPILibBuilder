@@ -55,8 +55,6 @@ npm run gulp
 
 npm run vscePackage
 
-New-Item -ItemType Directory -Path $baseLocation\build
-
 Copy-Item -Path "vscode-wpilib-$pubVersion.vsix" -Destination $baseLocation\build\WPILib.vsix
 
 Set-Location $baseLocation\vscode-wpilib\wpilib-utility-standalone
