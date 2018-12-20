@@ -67,15 +67,19 @@ Set-Location $baseLocation
 
 #Handle Installer
 
-$regex = "id ""edu\.wpi\.first\.GradleRIO"".+version.+"".+"""
+# $regex = "id ""edu\.wpi\.first\.GradleRIO"".+version.+"".+"""
 
-$updateGradleRio = Get-Content -Path .\wpilibinstaller\gradleriobase\build.gradle
+# $updateGradleRio = Get-Content -Path .\wpilibinstaller\gradleriobase\build.gradle
 
-$updateGradleRio = $updateGradleRio -creplace $regex, "id ""edu.wpi.first.GradleRIO"" version ""$pubVersion"""
+# $updateGradleRio = $updateGradleRio -creplace $regex, "id ""edu.wpi.first.GradleRIO"" version ""$pubVersion"""
 
-Set-Content -Path .\wpilibinstaller\gradleriobase\build.gradle -Value $updateGradleRio
+# Set-Content -Path .\wpilibinstaller\gradleriobase\build.gradle -Value $updateGradleRio
+
+Set-Content -Path .\wpilibinstaller\gradle.properties -Value "gradleRioVersion: $pubVersion"
 
 Set-Location .\wpilibinstaller
+
+
 
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix"
 
