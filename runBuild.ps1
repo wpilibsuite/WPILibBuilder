@@ -16,6 +16,14 @@ $updateGradle = $updateGradle -creplace $regex, "repo.url = ""http://first.wpi.e
 
 Set-Content -Path .\gradlerio\versionupdates.gradle -Value $updateGradle
 
+$updateGrRepo = Get-Content -Path .\gradlerio\src\main\groovy\edu\wpi\first\gradlerio\wpi\WPIMavenExtension.groovy
+
+$updateGrRepo = $updateGrRepo.Replace("this.useDevelopment = false", "this.useDevelopment = true");
+
+Set-Content -Path .\gradlerio\src\main\groovy\edu\wpi\first\gradlerio\wpi\WPIMavenExtension.groovy -Value $updateGrRepo
+
+return
+
 $baseLocation = Get-Location
 
 Set-Location .\gradlerio
