@@ -1,5 +1,5 @@
 # Clone all 3 repos
-git clone https://github.com/wpilibsuite/gradlerio
+git clone https://github.com/wpilibsuite/GradleRIO
 git clone https://github.com/wpilibsuite/wpilibinstaller
 git clone https://github.com/wpilibsuite/vscode-wpilib
 
