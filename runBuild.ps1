@@ -11,28 +11,13 @@ $pubVersion = "4242.0.0-nightly"
 $versionGradleString = "-PpublishVersion=$pubVersion"
 
 # Patch and build GradleRIO
-# version regex
-$regex = "repo\.url.+=.+('|"")http:\/\/first\.wpi\.edu\/FRC\/roborio\/maven\/release('|"")";
-
-$updateGradle = Get-Content -Path .\gradlerio\versionupdates.gradle
-
-$updateGradle = $updateGradle -creplace $regex, "repo.url = ""http://first.wpi.edu/FRC/roborio/maven/development"""
-
-Set-Content -Path .\gradlerio\versionupdates.gradle -Value $updateGradle
-
-$updateGrRepo = Get-Content -Path .\gradlerio\src\main\groovy\edu\wpi\first\gradlerio\wpi\WPIMavenExtension.groovy
-
-$updateGrRepo = $updateGrRepo.Replace("this.useDevelopment = false", "this.useDevelopment = true");
-
-Set-Content -Path .\gradlerio\src\main\groovy\edu\wpi\first\gradlerio\wpi\WPIMavenExtension.groovy -Value $updateGrRepo
-
 $baseLocation = Get-Location
 
 Set-Location .\gradlerio
 
-.\gradlew.bat UpdateVersions $versionGradleString
+.\gradlew.bat UpdateVersions $versionGradleString -PuseDevelopment
 
-.\gradlew.bat publishToMavenLocal $versionGradleString
+.\gradlew.bat publishToMavenLocal $versionGradleString -PuseDevelopment
 
 Set-Location $baseLocation
 
