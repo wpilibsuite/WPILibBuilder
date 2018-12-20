@@ -10,6 +10,18 @@ pool:
   vmImage: 'vs2017-win2016'
 
 steps:
+- powershell: |
+    mkdir build
+    $ProgressPreference = 'SilentlyContinue'
+    wget "https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip" -O "build\jdk.zip"
+    displayName: 'Download JDK'
+- task: JavaToolInstaller@0
+  inputs:
+    jdkSourceOption: localDirectory
+    jdkFile: 'build/jdk.zip'
+    jdkDestinationDirectory: 'build/jdkinst'
+    jdkArchitectureOption: x64
+
 - powershell: ./runBuild.ps1
   displayName: 'Run Build'
 
