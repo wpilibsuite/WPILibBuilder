@@ -1,9 +1,4 @@
 # Clone all 3 repos
-Remove-Item .\gradlerio -Recurse -Force
-Remove-Item .\wpilibinstaller -Recurse -Force
-Remove-Item .\vscode-wpilib -Recurse -Force
-Remove-Item .\build -Recurse -Force
-
 git clone https://github.com/wpilibsuite/gradlerio
 git clone https://github.com/wpilibsuite/wpilibinstaller
 git clone https://github.com/wpilibsuite/vscode-wpilib
