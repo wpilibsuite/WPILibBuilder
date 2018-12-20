@@ -1,0 +1,5 @@
+gradlerio/
+wpilibinstaller/
+vscode-wpilib/
+.gradle/
+build/
