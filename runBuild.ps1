@@ -3,11 +3,20 @@ git clone https://github.com/wpilibsuite/GradleRIO
 git clone https://github.com/wpilibsuite/wpilibinstaller
 git clone https://github.com/wpilibsuite/vscode-wpilib
 
+$pubVersion = $env:BUILD_BUILDNUMBER
+
+if (!$pubVersion) {
+  $pubVersion = "4242.0.0-nightly"
+} else {
+  $pubVersion = $pubVersion + "-nightly"
+}
+
+Write-Host $pubVersion
+
 New-Item -ItemType Directory -Path $env:USERPROFILE\.gradle
 
 Set-Content -Path $env:USERPROFILE\.gradle\gradle.properties -Value "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
 
-$pubVersion = "4242.0.0-nightly"
 $versionGradleString = "-PpublishVersion=$pubVersion"
 
 # Patch and build GradleRIO
@@ -68,7 +77,7 @@ Set-Location .\wpilibinstaller
 
 
 
-./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix"
+./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion"
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
