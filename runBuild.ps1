@@ -3,6 +3,7 @@ git clone https://github.com/wpilibsuite/GradleRIO
 git clone https://github.com/wpilibsuite/wpilibinstaller
 git clone https://github.com/wpilibsuite/vscode-wpilib
 
+# Build number isn't semver, TODO make it semver
 $pubVersion = $env:BUILD_BUILDNUMBER
 
 if (!$pubVersion) {
@@ -10,6 +11,8 @@ if (!$pubVersion) {
 } else {
   $pubVersion = $pubVersion + "-nightly"
 }
+
+$pubVersion = "4242.0.0-nightly"
 
 Write-Host $pubVersion
 
