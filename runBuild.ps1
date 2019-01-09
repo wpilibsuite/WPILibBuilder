@@ -92,6 +92,13 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
+./gradlew cleanOfflineRepository
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+
 Set-Location $baseLocation
 
 # Win64
@@ -101,6 +108,12 @@ Set-Content -Path .\wpilibinstallerwin64\gradle.properties -Value "gradleRioVers
 Set-Location .\wpilibinstallerwin64
 
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+./gradlew cleanOfflineRepository
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
@@ -120,6 +133,12 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
+./gradlew cleanOfflineRepository
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
 Set-Location $baseLocation
 
 # Linux
@@ -129,6 +148,12 @@ Set-Content -Path .\wpilibinstallerlinux\gradle.properties -Value "gradleRioVers
 Set-Location .\wpilibinstallerlinux
 
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-PlinuxBuild"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+./gradlew cleanOfflineRepository
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
