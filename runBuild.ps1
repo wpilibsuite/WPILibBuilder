@@ -1,6 +1,10 @@
 # Clone all 3 repos
+# Clone installer 4 times, once per OS
 git clone https://github.com/wpilibsuite/GradleRIO
-git clone https://github.com/wpilibsuite/wpilibinstaller
+git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerwin32
+git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerwin64
+git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallermac
+git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerlinux
 git clone https://github.com/wpilibsuite/vscode-wpilib
 
 # Build number isn't semver, TODO make it semver
@@ -74,13 +78,57 @@ Set-Location $baseLocation
 
 # Set-Content -Path .\wpilibinstaller\gradleriobase\build.gradle -Value $updateGradleRio
 
-Set-Content -Path .\wpilibinstaller\gradle.properties -Value "gradleRioVersion: $pubVersion"
+# Win32
 
-Set-Location .\wpilibinstaller
+Set-Content -Path .\wpilibinstallerwin32\gradle.properties -Value "gradleRioVersion: $pubVersion"
+
+Set-Location .\wpilibinstallerwin32
 
 
+
+./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-Pwindows32"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+Set-Location $baseLocation
+
+# Win64
+
+Set-Content -Path .\wpilibinstallerwin64\gradle.properties -Value "gradleRioVersion: $pubVersion"
+
+Set-Location .\wpilibinstallerwin64
 
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+Set-Location $baseLocation
+
+# Mac
+
+Set-Content -Path .\wpilibinstallermac\gradle.properties -Value "gradleRioVersion: $pubVersion"
+
+Set-Location .\wpilibinstallermac
+
+./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-PmacBuild"
+
+if ($lastexitcode -ne 0) {
+  throw ("Exec: " + $errorMessage)
+}
+
+Set-Location $baseLocation
+
+# Linux
+
+Set-Content -Path .\wpilibinstallerlinux\gradle.properties -Value "gradleRioVersion: $pubVersion"
+
+Set-Location .\wpilibinstallerlinux
+
+./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-PlinuxBuild"
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)

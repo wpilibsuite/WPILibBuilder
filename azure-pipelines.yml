@@ -27,7 +27,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: 'wpilibinstaller\build\outputs\**'
+    contents: 'wpilibinstaller*\build\outputs\**'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
