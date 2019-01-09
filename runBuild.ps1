@@ -1,7 +1,6 @@
 # Clone all 3 repos
 # Clone installer 4 times, once per OS
 git clone https://github.com/wpilibsuite/GradleRIO
-git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerwin32
 git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerwin64
 git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallermac
 git clone https://github.com/wpilibsuite/wpilibinstaller wpilibinstallerlinux
@@ -30,6 +29,9 @@ $versionGradleString = "-PpublishVersion=$pubVersion"
 $baseLocation = Get-Location
 
 New-Item -ItemType Directory -Path $baseLocation\installers
+New-Item -ItemType Directory -Path $baseLocation\installers\win
+New-Item -ItemType Directory -Path $baseLocation\installers\linux
+New-Item -ItemType Directory -Path $baseLocation\installers\mac
 
 Set-Location .\gradlerio
 
@@ -80,29 +82,6 @@ Set-Location $baseLocation
 
 # Set-Content -Path .\wpilibinstaller\gradleriobase\build.gradle -Value $updateGradleRio
 
-# Win32
-
-Set-Content -Path .\wpilibinstallerwin32\gradle.properties -Value "gradleRioVersion: $pubVersion"
-
-Set-Location .\wpilibinstallerwin32
-
-./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-Pwindows32"
-
-if ($lastexitcode -ne 0) {
-  throw ("Exec: " + $errorMessage)
-}
-
-Move-Item -Path build\outputs -Destination "$baseLocation\installers"
-
-./gradlew cleanOfflineRepository clean
-
-if ($lastexitcode -ne 0) {
-  throw ("Exec: " + $errorMessage)
-}
-
-
-Set-Location $baseLocation
-
 # Win64
 
 Set-Content -Path .\wpilibinstallerwin64\gradle.properties -Value "gradleRioVersion: $pubVersion"
@@ -115,7 +94,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+Move-Item -Path build\outputs -Destination "$baseLocation\installers\win"
 
 ./gradlew cleanOfflineRepository clean
 
@@ -137,7 +116,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+Move-Item -Path build\outputs -Destination "$baseLocation\installers\mac"
 
 ./gradlew cleanOfflineRepository clean
 
@@ -159,7 +138,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+Move-Item -Path build\outputs -Destination "$baseLocation\installers\linux"
 
 ./gradlew cleanOfflineRepository clean
 
