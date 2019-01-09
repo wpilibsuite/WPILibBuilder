@@ -29,6 +29,8 @@ $versionGradleString = "-PpublishVersion=$pubVersion"
 # Patch and build GradleRIO
 $baseLocation = Get-Location
 
+New-Item -ItemType Directory -Path $baseLocation\installers
+
 Set-Location .\gradlerio
 
 .\gradlew.bat UpdateVersions $versionGradleString -PuseDevelopment
@@ -84,15 +86,15 @@ Set-Content -Path .\wpilibinstallerwin32\gradle.properties -Value "gradleRioVers
 
 Set-Location .\wpilibinstallerwin32
 
-
-
 ./gradlew generateInstallers "-PvscodeLoc=$baseLocation\build\WPILib.vsix" "-PpublishVersion=$pubVersion" "-Pwindows32"
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-./gradlew cleanOfflineRepository
+Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+
+./gradlew cleanOfflineRepository clean
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
@@ -113,7 +115,9 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-./gradlew cleanOfflineRepository
+Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+
+./gradlew cleanOfflineRepository clean
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
@@ -133,7 +137,9 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-./gradlew cleanOfflineRepository
+Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+
+./gradlew cleanOfflineRepository clean
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
@@ -153,7 +159,9 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-./gradlew cleanOfflineRepository
+Move-Item -Path build\outputs -Destination "$baseLocation\installers"
+
+./gradlew cleanOfflineRepository clean
 
 if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
