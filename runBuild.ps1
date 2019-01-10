@@ -28,10 +28,9 @@ $versionGradleString = "-PpublishVersion=$pubVersion"
 # Patch and build GradleRIO
 $baseLocation = Get-Location
 
-New-Item -ItemType Directory -Path $baseLocation\installers
-New-Item -ItemType Directory -Path $baseLocation\installers\win
-New-Item -ItemType Directory -Path $baseLocation\installers\linux
-New-Item -ItemType Directory -Path $baseLocation\installers\mac
+New-Item -ItemType Directory -Path "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\win"
+New-Item -ItemType Directory -Path "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\linux"
+New-Item -ItemType Directory -Path "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\mac"
 
 Set-Location .\gradlerio
 
@@ -94,7 +93,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers\win"
+Move-Item -Path build\outputs -Destination "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\win"
 
 ./gradlew cleanOfflineRepository clean
 
@@ -116,7 +115,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers\mac"
+Move-Item -Path build\outputs -Destination "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\mac"
 
 ./gradlew cleanOfflineRepository clean
 
@@ -138,7 +137,7 @@ if ($lastexitcode -ne 0) {
   throw ("Exec: " + $errorMessage)
 }
 
-Move-Item -Path build\outputs -Destination "$baseLocation\installers\linux"
+Move-Item -Path build\outputs -Destination "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\linux"
 
 ./gradlew cleanOfflineRepository clean
 

@@ -25,12 +25,7 @@ steps:
 - powershell: ./runBuild.ps1
   displayName: 'Run Build'
 
-- task: CopyFiles@2
-  inputs:
-    contents: 'installers\**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-
 - task: PublishBuildArtifacts@1
   inputs:
-    artifactName: 'Win64'
+    artifactName: 'Nightly'
 
